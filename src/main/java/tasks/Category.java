@@ -1,3 +1,5 @@
+package tasks;
+
 public class Category {
     public String name;
     public Color color;

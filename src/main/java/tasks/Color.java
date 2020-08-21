@@ -1,3 +1,5 @@
+package tasks;
+
 public class Color {
     public static String DEFAULT_COLOR = "#FFF";
     public String value;
