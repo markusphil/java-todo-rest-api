@@ -18,17 +18,26 @@ public class CategoryController {
         return dao.get();
     }
 
+    @GetMapping("/category/{id}")
+    public Category getCategory(@PathVariable int id) throws SQLException {
+        return dao.getById(id);
+    }
+
     @PostMapping("/category")
     public Category addCategory(@RequestBody Category cat) throws SQLException{
         return dao.add(cat);
     }
 
     @PostMapping("/category/{id}")
-    public Category updateCategory(@RequestBody Category cat, @PathVariable int id) throws SQLException{
+    public Category updateCategory(@RequestBody Category cat, @PathVariable int id) throws SQLException, InvalidPathException{
         if (id == cat.id){
             return dao.update(cat);
         } else {
             throw new InvalidPathException("Received different id in Path and body");
         }
+    }
+    @DeleteMapping("/category/{id}")
+    public void deleteCategory(@PathVariable int id) throws SQLException, ResourceNotFoundException{
+        dao.delete(id);
     }
 }

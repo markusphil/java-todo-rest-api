@@ -1,5 +1,6 @@
 package persistance;
 
+import rest.ResourceNotFoundException;
 import tasks.Category;
 import tasks.Task;
 
@@ -70,6 +71,35 @@ public class CategoryDao implements ICategoryDao {
         }
 
         return cat;
+    }
+
+    @Override
+    public Category getById(int id) throws SQLException {
+        String query = "select * from category where id = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        ResultSet rs = ps.executeQuery();
+        Category cat = null;
+        while(rs.next()){
+            cat = new Category(rs.getString("name"), rs.getString("colorCode"));
+            cat.setId(rs.getInt("id"));
+        }
+        if (cat == null) throw new ResourceNotFoundException("Category");
+
+        return cat;
+
+    }
+
+    @Override
+    public void delete(int id) throws SQLException {
+        String query = "delete from category where id = ?";
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setInt(1, id);
+        int affectedRows = ps.executeUpdate();
+
+        if (affectedRows == 0) {
+            throw new SQLException("Deleting category failed, no rows affected.");
+        }
     }
     
 }
