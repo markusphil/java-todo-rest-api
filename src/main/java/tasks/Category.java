@@ -5,6 +5,11 @@ public class Category {
     public Color color;
     public int id;
 
+    public Category(String name){
+        this.name = name;
+        this.color = new Color(null);
+    }
+
     public Category(String name, String colorCode){
         this.name = name;
         this.color = new Color(colorCode);

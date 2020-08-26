@@ -3,9 +3,7 @@ package tasks;
 public class Task {
     public String name;
     public int id;
-
-    // empty constructor is necessary for de-serializing from JSON
-    public Task (){}
+    public Category category;
 
     public Task(String name){
         this.name = name;
@@ -14,4 +12,6 @@ public class Task {
     public void setId(int id){
         this.id = id;
     }
+
+    public void setCategory(Category cat) { this.category = cat; }
 }

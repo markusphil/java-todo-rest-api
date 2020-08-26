@@ -1,6 +1,7 @@
 package persistance;
 
 import exceptions.ResourceNotFoundException;
+import tasks.Category;
 import tasks.Task;
 
 import java.sql.*;
@@ -14,25 +15,32 @@ public class TaskDao implements ITaskDao {
 
     @Override
     public List<Task> get() throws SQLException{
-        String query = "select * from task";
+        String query = "select t.*, c.name as cat_name, c.color as cat_color from task(t) left inner join category(c) on t.c_id = c.id ";
         PreparedStatement ps
                 = con.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
-        List<Task> ls = new ArrayList<Task>();
+        List<Task> ls = new ArrayList<>();
 
         while (rs.next()) {
             Task task = new Task(rs.getString("name"));
             task.setId(rs.getInt("id"));
+            String catName = rs.getString("cat_name");
+            if(catName != null){
+                task.setCategory(new Category(catName, rs.getString("cat_color")));
+            }
+
             ls.add(task);
         }
         return ls;
     }
     @Override
     public Task add(Task task) throws SQLException {
-        String query = "insert into task(name) VALUES (?)";
+        String query = "insert into task(name, c_id) VALUES (?, ?)";
         PreparedStatement ps
                 = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, task.name);
+        if (task.category != null)
+            ps.setInt(2, task.category.id);
 
         int affectedRows = ps.executeUpdate();
 
@@ -54,11 +62,12 @@ public class TaskDao implements ITaskDao {
 
     @Override
     public Task update(Task task) throws SQLException {
-        String query = "update task set name = ? where id = ?";
+        String query = "update task set name = ? c_id = ? where id = ?";
         PreparedStatement ps
                 = con.prepareStatement(query);
         ps.setString(1, task.name);
-        ps.setInt(2, task.id);
+        ps.setInt(3, task.id);
+        if (task.category != null) ps.setInt(2, task.category.id);
 
         int affectedRows = ps.executeUpdate();
 
@@ -79,7 +88,12 @@ public class TaskDao implements ITaskDao {
         while(rs.next()){
             task = new Task(rs.getString("name"));
             task.setId(rs.getInt("id"));
+            String catName = rs.getString("cat_name");
+            if(catName != null){
+                task.setCategory(new Category(catName, rs.getString("cat_color")));
+            }
         }
+
         if (task == null) throw new ResourceNotFoundException("Task");
 
         return task;
