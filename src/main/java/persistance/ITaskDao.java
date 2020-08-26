@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface ITaskDao {
     List<Task> get() throws SQLException;
-    //IDbObject getById(int id) throws SQLException;
-    //void delete(int id) throws SQLException;
-    //IDbObject update(IDbObject object) throws SQLException;
+    Task getById(int id) throws SQLException;
+    void delete(int id) throws SQLException;
+    Task update(Task object) throws SQLException;
     Task add(Task object) throws SQLException;
 
 }

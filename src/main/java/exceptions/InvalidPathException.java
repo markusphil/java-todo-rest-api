@@ -1,7 +1,7 @@
-package rest;
+package exceptions;
 
 public class InvalidPathException extends RuntimeException {
-    InvalidPathException(String msg) {
+    public InvalidPathException(String msg) {
         super(msg);
     }
 }

@@ -1,6 +1,7 @@
 package rest;
 
-import org.springframework.boot.actuate.endpoint.InvalidEndpointRequestException;
+import exceptions.InvalidPathException;
+import exceptions.ResourceNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import persistance.CategoryDao;
 import tasks.Category;
@@ -29,7 +30,7 @@ public class CategoryController {
     }
 
     @PostMapping("/category/{id}")
-    public Category updateCategory(@RequestBody Category cat, @PathVariable int id) throws SQLException, InvalidPathException{
+    public Category updateCategory(@RequestBody Category cat, @PathVariable int id) throws SQLException, InvalidPathException {
         if (id == cat.id){
             return dao.update(cat);
         } else {
@@ -37,7 +38,7 @@ public class CategoryController {
         }
     }
     @DeleteMapping("/category/{id}")
-    public void deleteCategory(@PathVariable int id) throws SQLException, ResourceNotFoundException{
+    public void deleteCategory(@PathVariable int id) throws SQLException, ResourceNotFoundException {
         dao.delete(id);
     }
 }

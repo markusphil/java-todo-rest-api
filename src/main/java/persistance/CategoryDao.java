@@ -1,8 +1,7 @@
 package persistance;
 
-import rest.ResourceNotFoundException;
+import exceptions.ResourceNotFoundException;
 import tasks.Category;
-import tasks.Task;
 
 import java.sql.*;
 import java.util.ArrayList;
