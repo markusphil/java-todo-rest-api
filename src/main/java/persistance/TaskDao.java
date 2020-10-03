@@ -15,7 +15,7 @@ public class TaskDao implements ITaskDao {
 
     @Override
     public List<Task> get() throws SQLException{
-        String query = "select t.*, c.name as cat_name, c.color as cat_color from task(t) left inner join category(c) on t.c_id = c.id ";
+        String query = "SELECT task.*, category.name AS cat_name, category.colorCode AS cat_color FROM task LEFT OUTER JOIN category ON task.c_id = category.id ";
         PreparedStatement ps
                 = con.prepareStatement(query);
         ResultSet rs = ps.executeQuery();
@@ -39,8 +39,8 @@ public class TaskDao implements ITaskDao {
         PreparedStatement ps
                 = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, task.name);
-        if (task.category != null)
-            ps.setInt(2, task.category.id);
+
+        ps.setInt(2, task.category != null ? task.category.id : 1);
 
         int affectedRows = ps.executeUpdate();
 

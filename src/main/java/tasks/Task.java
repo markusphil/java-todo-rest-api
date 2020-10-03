@@ -10,6 +10,10 @@ public class Task {
     public Date createdAt;
     public Date dueTo;
 
+
+    // empty constructor is necessary for de-serializing from JSON
+    public Task (){}
+
     public Task(String name){
         this.name = name;
     }

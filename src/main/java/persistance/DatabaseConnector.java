@@ -9,8 +9,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnector {
-    private static final String DB_URL = "mysql:// localhost:3306/tasks?serverTimezone=Europe/Berlin";
-    private static final String DB_USER = "RestTaskJ";
+    private static final String DB_URL = "mysql:// localhost:3308/todo?serverTimezone=Europe/Berlin";
+    private static final String DB_USER = "root";
     private static final String DB_PW = "PROPl4n3t";
 
     private static Connection con;

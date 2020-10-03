@@ -1,5 +1,6 @@
 package persistance;
 
+import rest.Application;
 import tasks.Category;
 
 import java.sql.Connection;
@@ -53,6 +54,12 @@ public class Setup {
         createCategoryTable();
         createTaskTable();
         createDefaultCategory();
+
+        con.close();
+
+        // run Springboot Application
+        Application.main(new String[]{});
+
 
     }
 

@@ -1,7 +1,8 @@
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import rest.Application;
 
-@SpringBootTest
+@SpringBootTest(classes = Application.class)
 public class SpringBootTests {
 
     @Test
