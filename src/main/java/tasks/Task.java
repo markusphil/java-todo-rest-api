@@ -1,13 +1,14 @@
 package tasks;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Task {
     public String name;
     public int id;
     public Category category;
     public String description;
-    public Date createdAt;
+    public Timestamp createdAt;
     public Date dueTo;
 
 
@@ -20,7 +21,7 @@ public class Task {
 
     public void setId(int id){ this.id = id; }
 
-    public void setCreatedAt(Date createdDate){ this.createdAt = createdDate; }
+    public void setCreatedAt(Timestamp createdDate){ this.createdAt = createdDate; }
 
     public void setDueTo(Date dueDate){ this.dueTo = dueDate; }
 

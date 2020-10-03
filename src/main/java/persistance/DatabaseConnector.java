@@ -1,9 +1,5 @@
 package persistance;
 
-
-// TODO: use DAO Model structure and convert this to a singleton
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -18,7 +14,6 @@ public class DatabaseConnector {
 
     public static void connect() {
         try {
-            //Class.forName("com.mysql.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:"+ DB_URL, DB_USER, DB_PW);
         } catch (SQLException e){
             e.printStackTrace();

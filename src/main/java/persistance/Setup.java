@@ -32,7 +32,9 @@ public class Setup {
 
     private static void createTaskTable() throws SQLException {
         String query =  "create table if not exists task(" +
-                        "id int primary key auto_increment, name varchar(400),c_id int," +
+                        "id int primary key auto_increment, name varchar(200),c_id int," +
+                        "description varchar(400), createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP," +
+                        "dueTo Date," +
                         "constraint task_fk_c_id foreign key(c_id) references category(id))";
         PreparedStatement ps = con.prepareStatement(query);
         ps.executeUpdate();

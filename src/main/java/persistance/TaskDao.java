@@ -24,10 +24,15 @@ public class TaskDao implements ITaskDao {
         while (rs.next()) {
             Task task = new Task(rs.getString("name"));
             task.setId(rs.getInt("id"));
+
             String catName = rs.getString("cat_name");
             if(catName != null){
                 task.setCategory(new Category(catName, rs.getString("cat_color")));
             }
+
+            task.setDescription(rs.getString("description"));
+            task.setDueTo(rs.getDate("dueTo"));
+            task.setCreatedAt(rs.getTimestamp("createdAt"));
 
             ls.add(task);
         }
@@ -35,12 +40,28 @@ public class TaskDao implements ITaskDao {
     }
     @Override
     public Task add(Task task) throws SQLException {
-        String query = "insert into task(name, c_id) VALUES (?, ?)";
+        String query = "insert into task(name, description, c_id, dueTo) VALUES (?, ?, ?, ?)";
         PreparedStatement ps
                 = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, task.name);
 
-        ps.setInt(2, task.category != null ? task.category.id : 1);
+        if(task.description != null){
+            ps.setString(2,task.description);
+        } else {
+            ps.setNull(2, Types.VARCHAR);
+        }
+
+        if(task.category != null){
+            ps.setInt(3,task.category.id);
+        } else {
+            ps.setNull(3, Types.INTEGER);
+        }
+
+        if(task.dueTo != null){
+            ps.setDate(4, task.dueTo);
+        } else {
+            ps.setNull(4, Types.DATE);
+        }
 
         int affectedRows = ps.executeUpdate();
 
@@ -60,6 +81,7 @@ public class TaskDao implements ITaskDao {
         return task;
     }
 
+    // TODO: extend update to handle optional fields.
     @Override
     public Task update(Task task) throws SQLException {
         String query = "update task set name = ? c_id = ? where id = ?";
